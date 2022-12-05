@@ -8,7 +8,6 @@ Metadata:
 Parameters:
   RepositoryOrganization:
     Type: String
-    Default: compose-x
 
   RepositoryProvider:
     Type: String
@@ -29,10 +28,6 @@ Parameters:
     Default: main
 
   DockerBuildspecFile:
-    Type: String
-    Default: .cicd/buildspec.yml
-
-  MarketplaceRegistryAccountId:
     Type: String
 
 Mappings:
@@ -104,7 +99,6 @@ Resources:
                 Effect: Allow
                 Resource:
                   - !Sub "arn:${AWS::Partition}:ecr:${AWS::Region}:${AWS::AccountId}:repository/*"
-                  - !Sub "arn:${AWS::Partition}:ecr:us-east-1:${MarketplaceRegistryAccountId}:repository/*"
                 Action:
                   - "ecr:InitiateLayerUpload"
                   - "ecr:UploadLayerPart"
@@ -115,7 +109,6 @@ Resources:
                 Effect: Allow
                 Resource:
                   - "*"
-                  - !Sub "arn:${AWS::Partition}:ecr:us-east-1:${MarketplaceRegistryAccountId}:repository/*"
                 Action: [
                     "ecr-public:GetAuthorizationToken",
                     "sts:GetServiceBearerToken",
@@ -133,7 +126,6 @@ Resources:
                 Effect: Allow
                 Resource:
                   - !Sub "arn:${AWS::Partition}:ecr-public::${AWS::AccountId}:repository/*"
-                  - !Sub "arn:${AWS::Partition}:ecr:us-east-1:${MarketplaceRegistryAccountId}:repository/*"
                 Action: [
                     "ecr-public:InitiateLayerUpload",
                     "ecr-public:UploadLayerPart",
@@ -168,13 +160,6 @@ Resources:
         ComputeType: BUILD_GENERAL1_SMALL
         Image: aws/codebuild/standard:5.0
         Type: LINUX_CONTAINER
-        EnvironmentVariables:
-          - Name: MARKET_REPO_ACCOUNT_ID
-            Type: PLAINTEXT
-            Value: !Ref MarketplaceRegistryAccountId
-          - Name: MARKET_REPO_AWS_REGION
-            Type: PLAINTEXT
-            Value: us-east-1
       Source:
         Type: GITHUB
         ReportBuildStatus: True
