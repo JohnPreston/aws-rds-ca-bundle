@@ -186,5 +186,5 @@ Resources:
               Pattern: "PUSH"
               ExcludeMatchedPattern: False
             - Type: HEAD_REF
-              Pattern: !Sub '^refs/tags/v.*$'
+              Pattern: !Sub '^refs/tags/.*$'
               ExcludeMatchedPattern: False
