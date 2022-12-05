@@ -17,7 +17,7 @@ batch:
         variables:
           VERSION: 3.9
           ARCH: x86_64
-      buildspec: .cicd/build_images.yml
+      buildspec: .codebuild/build_images.yml
 
     - identifier: aarch64
       env:
@@ -28,7 +28,7 @@ batch:
         variables:
           ARCH: aarch64
           VERSION: 3.9
-      buildspec: .cicd/build_images.yml
+      buildspec: .codebuild/build_images.yml
 
     - identifier: manifest
       env:
