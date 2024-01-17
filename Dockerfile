@@ -11,6 +11,6 @@ RUN awk 'split_after == 1 {n++;split_after=0} /-----END CERTIFICATE-----/ {split
     awk 'split_after == 1 {n++;split_after=0} /-----END CERTIFICATE-----/ {split_after=1}{print > "rds-ca-" n ".pem"}' < /etc/ssl/certs/aws-global.pem ;\
     for CERT in rds-ca-*; do alias=$(openssl x509 -noout -text -in $CERT | perl -ne 'next unless /Subject:/; s/.*(CN=|CN = )//; print') ; echo "Importing $alias" ; keytool -importcert -file ${CERT} -alias "${alias}" -storepass changeit -keystore /var/opt/aws-rds.jks -noprompt ; done;
 
-FROM scratch
+FROM busybox
 WORKDIR /var/opt/
 COPY --from=certbuild /var/opt/aws-rds.jks /var/opt/aws-rds.jks
