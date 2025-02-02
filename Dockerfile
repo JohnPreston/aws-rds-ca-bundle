@@ -1,4 +1,4 @@
-ARG JAVA_VERSION=11
+ARG JAVA_VERSION=17
 ARG BASE_IMAGE=public.ecr.aws/ews-network/amazoncorretto:${JAVA_VERSION}
 
 
